@@ -24,6 +24,7 @@ function ProgramDetailModal({ program, onClose, onSuccess }) {
     curriculum_focus: getVal("Curriculum Focus"),
     application_deadline: getVal("Application Deadline"),
     tuition_cost: parseFloat(getVal("Tuition Cost", 0)) || 0,
+    currency: getVal("Currency", "USD"),
     application_fee: parseFloat(getVal("Application Fee", 0)) || 0,
     funding_scholarships: getVal("Funding/Scholarships"),
     duration: getVal("Duration"),
@@ -80,6 +81,20 @@ function ProgramDetailModal({ program, onClose, onSuccess }) {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const getCurrencySymbol = (currency) => {
+    const symbols = {
+      'USD': '$',
+      'EUR': '€',
+      'GBP': '£',
+      'CAD': '$',
+      'AUD': '$',
+      'INR': '₹',
+      'CNY': '¥',
+      'JPY': '¥'
+    };
+    return symbols[currency] || '$';
   };
 
   const DetailItem = ({ icon: Icon, label, value, color = "text-gray-400" }) => (
@@ -204,7 +219,19 @@ function ProgramDetailModal({ program, onClose, onSuccess }) {
                   <h3 className="text-blue-500 text-xs font-bold uppercase tracking-widest">C. Logistics & Cost</h3>
                   <div className="space-y-3">
                     <input type="date" name="application_deadline" value={formData.application_deadline} onChange={handleChange} className="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white" />
-                    <input type="number" name="tuition_cost" value={formData.tuition_cost} onChange={handleChange} placeholder="Tuition Cost" className="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white" />
+                    <div className="grid grid-cols-2 gap-2">
+                      <input type="number" name="tuition_cost" value={formData.tuition_cost} onChange={handleChange} placeholder="Tuition Cost" className="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white" />
+                      <select name="currency" value={formData.currency} onChange={handleChange} className="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white">
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="CAD">CAD ($)</option>
+                        <option value="AUD">AUD ($)</option>
+                        <option value="INR">INR (₹)</option>
+                        <option value="CNY">CNY (¥)</option>
+                        <option value="JPY">JPY (¥)</option>
+                      </select>
+                    </div>
                     <input type="number" name="application_fee" value={formData.application_fee} onChange={handleChange} placeholder="App Fee" className="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white" />
                     <input name="duration" value={formData.duration} onChange={handleChange} placeholder="Duration" className="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white" />
                     <input name="funding_scholarships" value={formData.funding_scholarships} onChange={handleChange} placeholder="Funding" className="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white" />
@@ -257,7 +284,7 @@ function ProgramDetailModal({ program, onClose, onSuccess }) {
                   <DetailItem icon={MapPin} label="Location" value={formData.location} color="text-red-400" />
                   <DetailItem icon={Mail} label="Contact" value={formData.contact_email} color="text-blue-400" />
                   <DetailItem icon={Calendar} label="Deadline" value={formData.application_deadline} color="text-yellow-400" />
-                  <DetailItem icon={DollarSign} label="Tuition" value={`$${formData.tuition_cost}`} color="text-green-400" />
+                  <DetailItem icon={DollarSign} label="Tuition" value={`${getCurrencySymbol(formData.currency)}${formData.tuition_cost}`} color="text-green-400" />
                   <DetailItem icon={Clock} label="Duration" value={formData.duration} color="text-purple-400" />
                   <DetailItem icon={BookOpen} label="Curriculum" value={formData.curriculum_focus} color="text-indigo-400" />
                 </div>

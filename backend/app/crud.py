@@ -11,6 +11,14 @@ def get_all_programs():
     if "Is Favorite" not in headers:
         # Append missing header
         worksheet.update_cell(1, len(headers) + 1, "Is Favorite")
+    
+    if "Currency" not in headers:
+        # Insert after Tuition Cost if possible
+        try:
+            idx = headers.index("Tuition Cost") + 2
+            worksheet.insert_cols([["Currency"]], col=idx)
+        except ValueError:
+            worksheet.update_cell(1, len(headers) + 1, "Currency")
         
     records = worksheet.get_all_records()
     return records
@@ -25,7 +33,7 @@ def create_program(program: ProgramCreate):
     row = [
         program.school_name, program.program_title, program.url, program.location, program.contact_email,
         program.fit_score, program.calculated_rank, program.pros, program.cons, program.curriculum_focus,
-        program.application_deadline, program.tuition_cost, program.application_fee, program.funding_scholarships, program.duration,
+        program.application_deadline, program.tuition_cost, program.currency, program.application_fee, program.funding_scholarships, program.duration,
         program.gre_gmat_required, program.letters_of_rec_qty, program.english_test, program.sop_essay_done,
         program.status, program.portal_login, program.decision_date, program.is_favorite
     ]
@@ -57,7 +65,7 @@ def update_program(school_name: str, program_title: str, program: MasterProgram)
     updated_row = [
         program.school_name, program.program_title, program.url, program.location, program.contact_email,
         program.fit_score, program.calculated_rank, program.pros, program.cons, program.curriculum_focus,
-        program.application_deadline, program.tuition_cost, program.application_fee, program.funding_scholarships, program.duration,
+        program.application_deadline, program.tuition_cost, program.currency, program.application_fee, program.funding_scholarships, program.duration,
         program.gre_gmat_required, program.letters_of_rec_qty, program.english_test, program.sop_essay_done,
         program.status, program.portal_login, program.decision_date, program.is_favorite
     ]

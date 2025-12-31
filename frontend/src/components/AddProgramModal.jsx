@@ -15,6 +15,7 @@ function AddProgramModal({ onClose, onSuccess }) {
     curriculum_focus: "",
     application_deadline: "",
     tuition_cost: 0,
+    currency: "USD",
     application_fee: 0,
     funding_scholarships: "",
     duration: "",
@@ -140,6 +141,19 @@ function AddProgramModal({ onClose, onSuccess }) {
               <div className="space-y-2">
                 <label className="text-xs text-gray-500 font-bold uppercase tracking-wider">Tuition Cost (Total)</label>
                 <input type="number" name="tuition_cost" value={formData.tuition_cost} onChange={handleChange} className="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white focus:border-blue-500 outline-none transition-all" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs text-gray-500 font-bold uppercase tracking-wider">Currency</label>
+                <select name="currency" value={formData.currency} onChange={handleChange} className="w-full bg-gray-900 border border-gray-800 rounded-xl p-3 text-sm text-white focus:border-blue-500 outline-none transition-all">
+                  <option value="USD">USD ($)</option>
+                  <option value="EUR">EUR (€)</option>
+                  <option value="GBP">GBP (£)</option>
+                  <option value="CAD">CAD ($)</option>
+                  <option value="AUD">AUD ($)</option>
+                  <option value="INR">INR (₹)</option>
+                  <option value="CNY">CNY (¥)</option>
+                  <option value="JPY">JPY (¥)</option>
+                </select>
               </div>
               <div className="space-y-2">
                 <label className="text-xs text-gray-500 font-bold uppercase tracking-wider">App Fee</label>

@@ -1,0 +1,29 @@
+services:
+  masters-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: masters-backend
+    restart: always
+    env_file:
+      - ./backend/.env
+    # Mount service account if not copied or for easier updates
+    # volumes:
+    #   - ./backend/service_account.json:/app/service_account.json
+    networks:
+      - caddy_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: masters-frontend
+    restart: always
+    depends_on:
+      - masters-api
+    networks:
+      - caddy_network
+
+networks:
+  caddy_network:
+    external: true

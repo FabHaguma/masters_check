@@ -20,6 +20,7 @@ class MasterProgram(BaseModel):
     # C. Logistics & Cost
     application_deadline: str # Using string for easier sheet handling, or date
     tuition_cost: float
+    currency: str = "USD"
     application_fee: float
     funding_scholarships: str
     duration: str

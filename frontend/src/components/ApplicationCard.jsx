@@ -1,6 +1,20 @@
 import React from 'react';
 import { MapPin, Calendar, DollarSign, ExternalLink, Star } from 'lucide-react';
 
+const getCurrencySymbol = (currency) => {
+  const symbols = {
+    'USD': '$',
+    'EUR': '€',
+    'GBP': '£',
+    'CAD': '$',
+    'AUD': '$',
+    'INR': '₹',
+    'CNY': '¥',
+    'JPY': '¥'
+  };
+  return symbols[currency] || '$';
+};
+
 const ApplicationCard = ({ app, onSelect }) => {
   return (
     <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8 shadow-xl hover:border-blue-500/50 transition-all group relative overflow-hidden">
@@ -33,7 +47,7 @@ const ApplicationCard = ({ app, onSelect }) => {
         </div>
         <div className="flex items-center text-gray-300 text-sm">
           <DollarSign size={16} className="mr-2 text-gray-500" />
-          Cost: ${app["Tuition Cost"]}
+          Cost: {getCurrencySymbol(app["Currency"])}{app["Tuition Cost"]}
         </div>
       </div>
 
